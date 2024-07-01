@@ -1,0 +1,55 @@
+services:
+  postgres:
+    image: postgres:14.7
+    ports:
+      - 5432:5432
+    environment:
+      LC_COLLATE: 'en_US.UTF-8'
+      POSTGRES_DB: ewallet
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      - pgdata:/pgdata
+    #   - ../script/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+  redis:
+    image: bitnami/redis:6.2.14
+    ports:
+      - 6379:6379
+    environment:
+      ALLOW_EMPTY_PASSWORD: 'yes'
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prom_data:/prometheus
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+    volumes:
+      - ./grafana:/etc/grafana/provisioning/datasources
+  ewallet:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+      - redis 
+    ports:
+      - "8888:8888"
+volumes:
+  prom_data:
+  pgdata:

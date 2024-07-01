@@ -1,0 +1,18 @@
+server:
+  port: 8888
+connections:
+  postgres:
+    host: postgres:5432
+    db: ewallet
+    user: admin
+    password: 1
+  redis:
+    host: redis:6379
+    password:
+    writeTimeout: 3s
+    readTimeout: 3s
+swagger:
+  host: localhost:8888
+  basePath:
+log:
+  level: debug
