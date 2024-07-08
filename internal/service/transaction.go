@@ -81,10 +81,15 @@ func (t *transactionService) List(ctx context.Context, userID string, condition 
 	if err != nil {
 		return model.TransactionPage{}, err
 	}
+	total, err := t.transactionRepo.Count(ctx, userID, condition)
+	if err != nil {
+		return model.TransactionPage{}, err
+	}
 	page := model.TransactionPage{
 		Transactions: txs,
 		Limit:        condition.Limit,
 		Offset:       condition.Offset,
+		Total:        total,
 	}
 	return page, nil
 }

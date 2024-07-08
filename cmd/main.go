@@ -23,6 +23,10 @@ func main() {
 		RunServer()
 	case "dummy_user":
 		DummyUser()
+	case "dummy_wallet":
+		DummyWallet()
+	case "dummy_transaction":
+		DummyTransaction()
 	default:
 		RunServer()
 	}

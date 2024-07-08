@@ -12,7 +12,7 @@ import (
 )
 
 func DummyUser() {
-	numUsers := 50000000 // Change this to 50000000 for 50 million users
+	numUsers := 10000000 // Change this to 50000000 for 50 million users
 	filePath := "users.csv"
 
 	file, err := os.Create(filePath)

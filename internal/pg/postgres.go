@@ -32,8 +32,8 @@ func NewPostgresDB(
 	if err = db.Ping(); err != nil {
 		return nil, fmt.Errorf("ping to database failed: %w", err)
 	}
-	db.SetMaxOpenConns(1000)
-	db.SetMaxIdleConns(100)
+	db.SetMaxOpenConns(5000)
+	db.SetMaxIdleConns(1000)
 
 	return db, nil
 }

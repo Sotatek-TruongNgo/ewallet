@@ -30,7 +30,7 @@ func generateWallet() model.Wallet {
 
 func DummyWallet() {
 	rand.Seed(time.Now().UnixNano())
-	numWallets := 1000 // Change this to the desired number of wallets
+	numWallets := 1000000 // Change this to the desired number of wallets
 	filePath := "wallets.csv"
 
 	file, err := os.Create(filePath)

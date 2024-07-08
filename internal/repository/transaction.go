@@ -11,6 +11,7 @@ import (
 
 type TransactionRepository interface {
 	Create(ctx context.Context, transaction model.Transaction) error
+	Count(ctx context.Context, userID string, condition model.TransactionSearchCondition) (int, error)
 	List(ctx context.Context, userID string, condition model.TransactionSearchCondition) ([]*model.Transaction, error)
 }
 
@@ -29,6 +30,39 @@ func (w *transactionRepository) Create(ctx context.Context, transaction model.Tr
 		return err
 	}
 	return nil
+}
+
+// Count implements TransactionRepository.
+func (w *transactionRepository) Count(ctx context.Context, userID string, condition model.TransactionSearchCondition) (int, error) {
+	tx := cx.GetTx(ctx)
+
+	var cond = "user_id = ?"
+	values := []any{userID}
+	if condition.From != nil {
+		cond += " AND from = ?"
+		values = append(values, *condition.From)
+	}
+	if condition.To != nil {
+		cond += " AND to = ?"
+		values = append(values, *condition.To)
+	}
+	if condition.Start != nil {
+		cond += " AND timestamp > ?"
+		values = append(values, *condition.Start)
+	}
+	if condition.End != nil {
+		cond += " AND timestamp < ?"
+		values = append(values, *condition.End)
+	}
+	var total int
+
+	stmt := fmt.Sprintf(`SELECT COUNT(*) FROM transactions WHERE %s`, cond)
+
+	err := tx.GetContext(ctx, &total, tx.Rebind(stmt), values...)
+	if err != nil {
+		return 0, err
+	}
+	return total, nil
 }
 
 func (w *transactionRepository) List(ctx context.Context, userID string, condition model.TransactionSearchCondition) ([]*model.Transaction, error) {

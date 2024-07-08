@@ -15,6 +15,8 @@ CREATE TABLE "wallets" (
  PRIMARY KEY ("address")
 );
 
+CREATE INDEX wallets_user_id_idx ON wallets(user_id);
+
 CREATE TABLE "transactions" (
  "tx" character varying(36) NOT NULL,
  "user_id" character varying(36) NOT NULL,
@@ -25,3 +27,6 @@ CREATE TABLE "transactions" (
  "timestamp" bigint NOT NULL,
  PRIMARY KEY ("tx")
 );
+
+CREATE INDEX transactions_user_id_idx ON transactions(user_id);
+CREATE INDEX transactions_timestamp_idx ON transactions(timestamp DESC);

@@ -1,4 +1,6 @@
-h1:osmOIR90jekO4L+OnI6M6S4LUezQY03Qp42FhJpgqAU=
+h1:DwXyigQAhLqRwTVN6sBJeDM3wLuedEfLO1uW3L02mH0=
 20240629171403_init.sql h1:iG1zVu19LuToj/MU4murb6d1Vi6TKMn2+86uMk8wKYI=
 20240629174043_alter_transactions_column.sql h1:3WUmU6Hq8Q6MGhMs61WjKuHBycB12c/Gu5vmlUuVEWw=
 20240630091114_alter_transactions_add_user_id.sql h1:r9/+go0pD0RbUE31A+wqRVBe75K8XtgCfTRGaxNBl/o=
+20240707043440_create_index_wallets.sql h1:FIdLBlcyRAF8sauxX1m59DSp6UUPp53nh64OJlFMMio=
+20240707045157_create_index_transactions.sql h1:BY01pwhvmiH0F37RA0CyJv/MUJmwUupY+PJiITUbWAM=
